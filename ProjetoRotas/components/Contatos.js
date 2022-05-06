@@ -1,11 +1,31 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, Image } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState, useEffect } from 'react';
 import { Header } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
+import axios from 'axios';
+
+function consultarDados(respo){
+
+    axios.get('http://professornilson.com/testeservico/clientes')
+    .then(function (response) {
+        console.log(response);
+        respo = response['data']
+        console.log(respo)
+    
+    }).catch(function (error) {
+    console.log(error);
+    });
+  }
+  
+
 
 export default function ContatosScreen({route,navigation}) {
+    useEffect(()=>{
+        consultarDados(resposta)
+    }, [])
+    var [resposta, consultarDados] = useState();
+    
     return (
         <View>
             <Header
@@ -13,6 +33,10 @@ export default function ContatosScreen({route,navigation}) {
                 centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
                 rightComponent={{ icon: 'add', color: '#fff', onPress:() => navigation.navigate('CadastroContatos')}}
             />
+            {
+                resposta.forEach(element => console.log(element))
+            }
+            
             <View>
                 <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos')} >
                 <Image

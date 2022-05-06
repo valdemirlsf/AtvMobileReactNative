@@ -7,14 +7,9 @@ import CadastroScreen from './components/Cadastro';
 import HomeScreen from './components/Login';
 import CadastroContatosScreen from './components/CadastroContato';
 import EditaContatos from './components/EditarContato';
-import Servicos from './services/services'
-import axios from 'axios';
+
 
 const Stack = createNativeStackNavigator();
-
-
-
-
 
 function App() {
 
