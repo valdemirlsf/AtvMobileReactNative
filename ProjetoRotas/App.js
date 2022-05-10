@@ -9,6 +9,7 @@ import CadastroContatosScreen from './components/CadastroContato';
 import EditaContatos from './components/EditarContato';
 
 
+
 const Stack = createNativeStackNavigator();
 
 function App() {

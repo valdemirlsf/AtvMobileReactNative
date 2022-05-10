@@ -1,88 +1,71 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Header } from 'react-native-elements';
+import { Header, ListItem, Avatar } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import axios from 'axios';
-
-function consultarDados(respo){
-
-    axios.get('http://professornilson.com/testeservico/clientes')
-    .then(function (response) {
-        console.log(response);
-        respo = response['data']
-        console.log(respo)
-    
-    }).catch(function (error) {
-    console.log(error);
-    });
-  }
-  
-
+import { Servicos } from '../services/Servicos';
 
 export default function ContatosScreen({route,navigation}) {
+    const [getContatos, setContatos] = useState([]);
+
+    function consultarDados(){
+
+        axios.get('http://professornilson.com/testeservico/clientes')
+        
+        .then(function (response) {
+            setContatos(response.data);
+        }).catch(function (error) {
+            console.log(error);
+        
+        });
+        
+    }
+
+
     useEffect(()=>{
-        consultarDados(resposta)
-    }, [])
-    var [resposta, consultarDados] = useState();
-    
+        consultarDados()
+    }, [getContatos])
+
     return (
-        <View>
+        <View style={{backgroundColor:"#fff"}}>
             <Header
                 leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => navigation.navigate('Home')  }}
-                centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                centerComponent={{ text: 'Meus contatos', style: { color: '#fff', fontSize: "20px"} }}
                 rightComponent={{ icon: 'add', color: '#fff', onPress:() => navigation.navigate('CadastroContatos')}}
             />
-            {
-                resposta.forEach(element => console.log(element))
-            }
             
-            <View>
-                <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos')} >
-                <Image
-                    style={styles.tinyLogo}
-                    source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
-                    }}
-                />
-                <View style={styles.info}>
-                    <Text style={styles.infoText}>Fulano Da Silva</Text>
-                    <Text >81 XXXXX-XXXX</Text>
-                </View>
-                </TouchableOpacity>
+        {
+        getContatos.map((contato) => (
+            
+            <View key={contato.id}>
+                <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos', {
+                    nome:contato.nome,
+                    telefone:contato.telefone,
+                    email:contato.email,
+                    cpf:contato.cpf,
+                    id:contato.id,
+                })} >
                 
-            </View>
-            <View>
-                <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos')} >
-                <Image
-                    style={styles.tinyLogo}
-                    source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
-                    }} 
+                <Avatar
+                    rounded
+                    icon={{name: 'user', type: 'font-awesome'}}
+                    activeOpacity={1}
+                    containerStyle = { styles.tinyLogo }
+            
                 />
                 <View style={styles.info}>
-                    <Text style={styles.infoText}>Fulano Da Silva</Text>
-                    <Text >81 XXXXX-XXXX</Text>
-                </View>
-                </TouchableOpacity>
-                
-            </View>
-            <View>
-                <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos')} >
-                <Image
-                    style={styles.tinyLogo}
-                    source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
-                    }}
-                />
-                <View style={styles.info}>
-                    <Text style={styles.infoText}>Fulano Da Silva</Text>
-                    <Text >81 XXXXX-XXXX</Text>
+                    <Text style={styles.infoText}> {contato.nome} </Text>
+                    <Text> {contato.telefone} </Text>
                 </View>
                 </TouchableOpacity>
                 
             </View>
         
+        ))
+        }
+                
+                
         
         </View>
         
@@ -93,13 +76,16 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         margin: 10,
-        borderRadius: "50%"
+        borderRadius: "50%",
+        backgroundColor: "#5c5c5c"
     },
     geral: {
         flex:1,
         flexDirection: 'row',
         justifyContent: 'center',
-        border: "1px solid gray"
+        borderBottomWidth: "1px",
+        borderBottomColor: "gray",
+        borderbottomStyle: "solid"
     },
     info: {
         flex:1,
