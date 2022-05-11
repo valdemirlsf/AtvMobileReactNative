@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     },
     button: {
         width: "80%",
-        padding: "5px"
+        padding: 5
     },
     tinyLogo: {
         width: 100,
         height: 100,
         margin: 50,
         marginTop: 5,
-        borderRadius: "50%"
+        borderRadius: 50
     }
   });

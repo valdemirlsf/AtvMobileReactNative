@@ -22,9 +22,10 @@ export default function HomeScreen({route, navigation}) {
         />
         <View style={styles.button}>
             <Button title='Login' onPress={() => navigation.navigate('Contatos')} />
+            <Button color={"red"} title='Cadastro' onPress={() => navigation.navigate('Cadastro')}/>
         </View>
         <View style={styles.button}>
-            <Button color={"red"} title='Cadastro' onPress={() => navigation.navigate('Cadastro')}/>
+            
         </View>
         
     </View>
@@ -32,21 +33,25 @@ export default function HomeScreen({route, navigation}) {
     }
     const styles = StyleSheet.create({
         input: {
-            width: "80%",
+            width: 380,
             height: 40,
             margin: 12,
             borderWidth: 1,
             padding: 10,
+            borderRadius: 10
         },
         button: {
-            width: "80%",
-            padding: "5px"
+            width: "100%",
+            padding: 5,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center"
         },
         tinyLogo: {
             width: 100,
             height: 100,
             margin: 50,
             marginTop: 5,
-            borderRadius: "50%"
+            borderRadius: 50
         }
       });

@@ -2,7 +2,7 @@ import { axios } from "axios";
 
 export class Servicos{
 
-    Servicos(){
+    constructor(){
 
     }
     

@@ -9,6 +9,7 @@ import { Servicos } from '../services/Servicos';
 export default function ContatosScreen({route,navigation}) {
     const [getContatos, setContatos] = useState([]);
 
+
     function consultarDados(){
 
         axios.get('http://professornilson.com/testeservico/clientes')
@@ -31,7 +32,7 @@ export default function ContatosScreen({route,navigation}) {
         <View style={{backgroundColor:"#fff"}}>
             <Header
                 leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => navigation.navigate('Home')  }}
-                centerComponent={{ text: 'Meus contatos', style: { color: '#fff', fontSize: "20px"} }}
+                centerComponent={{ text: 'Meus contatos', style: { color: '#fff', fontSize: 20} }}
                 rightComponent={{ icon: 'add', color: '#fff', onPress:() => navigation.navigate('CadastroContatos')}}
             />
             
@@ -76,16 +77,14 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         margin: 10,
-        borderRadius: "50%",
+        borderRadius: 50,
         backgroundColor: "#5c5c5c"
     },
     geral: {
-        flex:1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        borderBottomWidth: "1px",
+        backgroundColor: 'black',
+        borderBottomWidth: 1,
         borderBottomColor: "gray",
-        borderbottomStyle: "solid"
+        
     },
     info: {
         flex:1,
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     infoText:{
-        fontSize: '20px',
+        fontSize: 20,
         fontWeight: 'bold'
     }
   });
