@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     tinyLogo: {
         width: 50,
         height: 50,
-        margin: 10,
+        margin: 3,
         borderRadius: 50,
         backgroundColor: "#5c5c5c"
     },
