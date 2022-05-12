@@ -35,18 +35,18 @@ export default function ContatosScreen({route,navigation}) {
                 centerComponent={{ text: 'Meus contatos', style: { color: '#fff', fontSize: 20} }}
                 rightComponent={{ icon: 'add', color: '#fff', onPress:() => navigation.navigate('CadastroContatos')}}
             />
-            
+        <ScrollView>
         {
         getContatos.map((contato) => (
             
-            <View key={contato.id}>
-                <TouchableOpacity style={styles.geral} onPress={() => navigation.navigate('EditaContatos', {
-                    nome:contato.nome,
-                    telefone:contato.telefone,
-                    email:contato.email,
-                    cpf:contato.cpf,
-                    id:contato.id,
-                })} >
+            <ListItem key={contato.id} style={styles.geral} onPress={() => navigation.navigate('EditaContatos', {
+                nome:contato.nome,
+                telefone:contato.telefone,
+                email:contato.email,
+                cpf:contato.cpf,
+                id:contato.id,
+            })}>
+                
                 
                 <Avatar
                     rounded
@@ -55,19 +55,20 @@ export default function ContatosScreen({route,navigation}) {
                     containerStyle = { styles.tinyLogo }
             
                 />
-                <View style={styles.info}>
-                    <Text style={styles.infoText}> {contato.nome} </Text>
-                    <Text> {contato.telefone} </Text>
-                </View>
-                </TouchableOpacity>
+                <ListItem.Content style={styles.info}>
+                    <ListItem.Title style={styles.infoText}> {contato.nome} </ListItem.Title>
+                    <ListItem.Subtitle> {contato.telefone} </ListItem.Subtitle>
+                </ListItem.Content>
                 
-            </View>
+                
+                
+            </ListItem>
         
         ))
         }
                 
                 
-        
+                </ScrollView>
         </View>
         
     );
@@ -81,7 +82,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#5c5c5c"
     },
     geral: {
-        backgroundColor: 'black',
         borderBottomWidth: 1,
         borderBottomColor: "gray",
         
@@ -89,10 +89,11 @@ const styles = StyleSheet.create({
     info: {
         flex:1,
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     infoText:{
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        
     }
   });
