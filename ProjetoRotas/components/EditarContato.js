@@ -1,8 +1,64 @@
 import * as React from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Image } from 'react-native';
-import { Header } from 'react-native-elements';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { Header, Input, Image, Avatar } from 'react-native-elements';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function EditaContatos({route,navigation}) {
+
+    const  [getNome,setNome] = useState();
+    const  [getCpf,setCpf] = useState();
+    const  [getTelefone,setTelefone] = useState();
+    const  [getId,setId] = useState();
+    const  [getEmail,setEmail] = useState();
+
+    useEffect(()=>{
+        
+        if(route.params){
+            const { nome } =  route.params 
+            const { telefone } =  route.params 
+            const { id } =  route.params
+            const { cpf } =  route.params
+            const { email } =  route.params
+
+
+            setNome(nome)
+            setTelefone(telefone)
+            setCpf(cpf)
+            setEmail(email)
+            setId(id)
+            
+
+        }
+  
+              
+        
+        
+    },[])
+    function alterarDados(){
+
+        axios.put('http://professornilson.com/testeservico/clientes/'+getId
+        ,
+        
+        {
+        nome: getNome,
+        telefone: getTelefone,
+        email: getEmail,
+        cpf: getCpf
+        }).then(function (response) {
+            
+            console.log(response.config.data);
+            navigation.navigate('Contatos')
+            console.log('Editado!')
+        }).catch(function (error) {
+           
+            console.log(error);
+            console.log('Erro na Edição!')
+        
+        });
+        
+        }
+
     return (
         <View>
         <Header
@@ -10,33 +66,42 @@ export default function EditaContatos({route,navigation}) {
                 centerComponent={{ text: 'Editar contato', style: { color: '#fff' } }}
                 rightComponent={{ icon: 'home', color: '#fff', onPress:() => navigation.navigate('Home')}}
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Image
-                style={styles.tinyLogo}
-                source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-            />
-            <Text>Nome</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o seu nome"
-            />
-            <Text>Email</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o Email"
-            />
-            <Text>Telefone</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o Telefone"
-            />
-            <View style={styles.button}>
-                <Button color={"blue"} title='Editar Contato'/>
-            </View>
-            <View style={styles.button}>
-                <Button color={"red"} title='Excluir Contato'/>
+        <View>
+            <Avatar
+                        rounded
+                        icon={{name: 'user', type: 'font-awesome'}}
+                        activeOpacity={1}
+                        containerStyle = { styles.tinyLogo }
+                
+                    />
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o seu nome"
+                    onChangeText={text => setNome(text)}
+                    value={getNome || ''}
+                />
+
+                <Input
+                    style={styles.input}
+                    placeholder="Digite CPF"
+                    onChangeText={text => setCpf(text)}
+                    value={getCpf || ''}
+                />
+
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o telefone"
+                    onChangeText={text => setTelefone(text)}
+                    value={getTelefone || ''}
+                />
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o email"
+                    onChangeText={text => setEmail(text)}
+                    value={getEmail || ''}
+                />
+                <View style={styles.button}>
+                <Button color={"red"} title='Editar' onPress={alterarDados}/>
             </View>
         </View>
     </View>
@@ -44,21 +109,25 @@ export default function EditaContatos({route,navigation}) {
 }
 const styles = StyleSheet.create({
     input: {
-        width: "80%",
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
+        height: 34,
+        margin: 2,
+        padding: 1,
+        alignSelf: 'center'
     },
     button: {
-        width: "80%",
-        padding: 5
+        width: 280,
+        padding: 5,
+        justifyContent: 'center',
+        margin: 30,
+        alignSelf: 'center'
+        
     },
     tinyLogo: {
         width: 100,
         height: 100,
         margin: 50,
-        marginTop: 5,
-        borderRadius: 50
+        borderRadius: 50,
+        alignSelf: 'center',
+        backgroundColor: 'darkgray'
     }
   });

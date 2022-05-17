@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export default function CadastroScreen({route,navigation}) {
     const  [getNome,setNome] = useState();
-    const  [getSenha,setSenha] = useState();
+    const  [getTelefone,setTelefone] = useState();
     const  [getEmail,setEmail] = useState();
     const  [getCpf,setCpf] = useState();
 
@@ -17,9 +17,9 @@ export default function CadastroScreen({route,navigation}) {
         
         axios.post('http://professornilson.com/testeservico/clientes', {
             nome: getNome,
-            senha: getSenha,
+            cpf: getCpf,
             email: getEmail,
-            cpf: getCpf
+            telefone: getTelefone,
           })
           .then(function (response) {
             console.log(response.config.data);
@@ -58,6 +58,11 @@ export default function CadastroScreen({route,navigation}) {
                 onChangeText={text => setCpf(text)}
             />
 
+            <Input
+                style={styles.input}
+                placeholder="Digite o telefone"
+                onChangeText={text => setTelefone(text)}
+            />
             <Input
                 style={styles.input}
                 placeholder="Digite o email"

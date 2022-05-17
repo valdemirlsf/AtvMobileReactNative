@@ -1,39 +1,80 @@
 import * as React from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Image } from 'react-native';
-import { Header } from 'react-native-elements';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { Header, Input, Image, Avatar } from 'react-native-elements';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function CadastroContatosScreen({route,navigation}) {
+export default function EditaContatos({route,navigation}) {
+
+    const  [getNome,setNome] = useState();
+    const  [getCpf,setCpf] = useState();
+    const  [getTelefone,setTelefone] = useState();
+    const  [getId,setId] = useState();
+    const  [getEmail,setEmail] = useState();
+
+    
+    function inserirDados(){
+        
+        axios.post('http://professornilson.com/testeservico/clientes', {
+            nome: getNome,
+            cpf: getCpf,
+            email: getEmail,
+            telefone: getTelefone,
+          })
+          .then(function (response) {
+            console.log(response.config.data);
+            console.log('Cadastrado com Sucesso')
+          })
+          .catch(function (error) {
+            console.log(error);
+            console.log('Erro ao cadastar')
+          });     
+        
+    }
+
     return (
-    <View>
+        <View>
         <Header
                 leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => navigation.navigate('Contatos')  }}
-                centerComponent={{ text: 'Adicionar um contato', style: { color: '#fff' } }}
+                centerComponent={{ text: 'Novo contato', style: { color: '#fff' } }}
                 rightComponent={{ icon: 'home', color: '#fff', onPress:() => navigation.navigate('Home')}}
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Image
-                style={styles.tinyLogo}
-                source={{
-                    uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-            />
-            <Text>Nome</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o seu nome"
-            />
-            <Text>Email</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o Email"
-            />
-            <Text>Telefone</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Digite o Telefone"
-            />
-            <View style={styles.button}>
-                <Button color={"red"} title='Adicionar Contato'/>
+        <View >
+            <Avatar
+                        rounded
+                        icon={{name: 'user', type: 'font-awesome'}}
+                        activeOpacity={1}
+                        containerStyle = { styles.tinyLogo }
+                
+                    />
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o seu nome"
+                    onChangeText={text => setNome(text)}
+                    value={getNome || ''}
+                />
+
+                <Input
+                    style={styles.input}
+                    placeholder="Digite CPF"
+                    onChangeText={text => setCpf(text)}
+                    value={getCpf || ''}
+                />
+
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o telefone"
+                    onChangeText={text => setTelefone(text)}
+                    value={getTelefone || ''}
+                />
+                <Input
+                    style={styles.input}
+                    placeholder="Digite o email"
+                    onChangeText={text => setEmail(text)}
+                    value={getEmail || ''}
+                />
+                <View style={styles.button}>
+                <Button color={"red"} title='Adicionar' onPress={inserirDados}/>
             </View>
         </View>
     </View>
@@ -41,21 +82,25 @@ export default function CadastroContatosScreen({route,navigation}) {
 }
 const styles = StyleSheet.create({
     input: {
-        width: "80%",
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
+        height: 34,
+        margin: 2,
+        padding: 1,
+        alignSelf: 'center'
     },
     button: {
-        width: "80%",
-        padding: 5
+        width: 280,
+        padding: 5,
+        justifyContent: 'center',
+        margin: 30,
+        alignSelf: 'center'
+        
     },
     tinyLogo: {
         width: 100,
         height: 100,
         margin: 50,
-        marginTop: 5,
-        borderRadius: 50
+        borderRadius: 50,
+        alignSelf: 'center',
+        backgroundColor: 'darkgray'
     }
   });
