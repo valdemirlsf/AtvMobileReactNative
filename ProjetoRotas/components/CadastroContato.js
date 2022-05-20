@@ -4,7 +4,7 @@ import { Header, Input, Image, Avatar } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 export default function EditaContatos({route,navigation}) {
 
@@ -12,7 +12,7 @@ export default function EditaContatos({route,navigation}) {
     function logoff(){
         signOut(auth).then(() => {
             // Sign-out successful.
-                navigation.navigate('Login')
+                navigation.navigate('Home')
             }).catch((error) => {
             // An error happened.
                 console.log(error)
