@@ -4,33 +4,48 @@ import { Header, Input, Image, Avatar } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
 export default function CadastroScreen({route,navigation}) {
-    const  [getNome,setNome] = useState();
-    const  [getTelefone,setTelefone] = useState();
-    const  [getEmail,setEmail] = useState();
-    const  [getCpf,setCpf] = useState();
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCAd6lDV9a9HERdKaEijnRRUWgeZI-SspQ",
+        authDomain: "aulamobile-c4232.firebaseapp.com",
+        projectId: "aulamobile-c4232",
+        storageBucket: "aulamobile-c4232.appspot.com",
+        messagingSenderId: "614036773871",
+        appId: "1:614036773871:web:fa9269b2c5841e583bb41a",
+        measurementId: "G-Q49FVJ63WV"
+    };
 
-
-
-    function inserirDados(){
-        
-        axios.post('http://professornilson.com/testeservico/clientes', {
-            nome: getNome,
-            cpf: getCpf,
-            email: getEmail,
-            telefone: getTelefone,
-          })
-          .then(function (response) {
-            console.log(response.config.data);
-            console.log('Cadastrado com Sucesso')
-          })
-          .catch(function (error) {
-            console.log(error);
-            console.log('Erro ao cadastar')
-          });     
-        
+    const auth = getAuth();
+    function Cadastrar(){
+        createUserWithEmailAndPassword(auth, getEmail, getSenha)
+        .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigation.navigate('Login')
+        // ...
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        });
     }
+    
+    const app = initializeApp(firebaseConfig);
+    
+
+    const  [getSenha,setSenha] = useState();
+    const  [getEmail,setEmail] = useState();
+
+
+
+
+
+    
     return (
     <View>
         <Header
@@ -46,32 +61,23 @@ export default function CadastroScreen({route,navigation}) {
                     containerStyle = { styles.tinyLogo }
             
                 />
-            <Input
-                style={styles.input}
-                placeholder="Digite o seu nome"
-                onChangeText={text => setNome(text)}
-            />
+            
 
-            <Input
-                style={styles.input}
-                placeholder="Digite CPF"
-                onChangeText={text => setCpf(text)}
-            />
-
-            <Input
-                style={styles.input}
-                placeholder="Digite o telefone"
-                onChangeText={text => setTelefone(text)}
-            />
             <Input
                 style={styles.input}
                 placeholder="Digite o email"
                 onChangeText={text => setEmail(text)}
             />
-            
+            <Input
+                inputStyle={styles.input}
+                placeholder="Digite a senha"
+                label="Senha: "
+                secureTextEntry={true}
+                onChangeText={text => setSenha(text)}
+            />
             
             <View style={styles.button}>
-                <Button color={"red"} title='Cadastrar' onPress={inserirDados}/>
+                <Button color={"red"} title='Cadastrar' onPress={Cadastrar}/>
             </View>
         </View>
     </View>

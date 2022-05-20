@@ -4,7 +4,21 @@ import { useState, useEffect } from 'react';
 import { Header, ListItem, Avatar } from 'react-native-elements';
 import axios from 'axios';
 
+import { getAuth } from "firebase/auth";
+
 export default function ContatosScreen({route,navigation}) {
+
+    const auth = getAuth();
+    function logoff(){
+        signOut(auth).then(() => {
+            // Sign-out successful.
+                navigation.navigate('Login')
+            }).catch((error) => {
+            // An error happened.
+                console.log(error)
+            });
+    }
+
     const [getContatos, setContatos] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -71,7 +85,7 @@ export default function ContatosScreen({route,navigation}) {
                 </View>
             </Modal>
             <Header
-                leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => navigation.navigate('Home')  }}
+                leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => logoff  }}
                 centerComponent={{ text: 'Meus contatos', style: { color: '#fff', fontSize: 20} }}
                 rightComponent={{ icon: 'add', color: '#fff', onPress:() => navigation.navigate('CadastroContatos')}}
             />

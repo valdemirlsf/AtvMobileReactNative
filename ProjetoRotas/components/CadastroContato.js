@@ -4,7 +4,20 @@ import { Header, Input, Image, Avatar } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { getAuth } from "firebase/auth";
+
 export default function EditaContatos({route,navigation}) {
+
+    const auth = getAuth();
+    function logoff(){
+        signOut(auth).then(() => {
+            // Sign-out successful.
+                navigation.navigate('Login')
+            }).catch((error) => {
+            // An error happened.
+                console.log(error)
+            });
+    }
 
     const  [getNome,setNome] = useState();
     const  [getCpf,setCpf] = useState();
@@ -35,7 +48,7 @@ export default function EditaContatos({route,navigation}) {
     return (
         <View>
         <Header
-                leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => navigation.navigate('Contatos')  }}
+                leftComponent={{ icon: 'arrow-left', type:"font-awesome", color: '#fff', iconStyle: { color: '#fff' }, onPress:() => logoff }}
                 centerComponent={{ text: 'Novo contato', style: { color: '#fff' } }}
                 rightComponent={{ icon: 'home', color: '#fff', onPress:() => navigation.navigate('Home')}}
         />

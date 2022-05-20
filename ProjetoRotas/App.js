@@ -7,10 +7,23 @@ import CadastroScreen from './components/Cadastro';
 import HomeScreen from './components/Login';
 import CadastroContatosScreen from './components/CadastroContato';
 import EditaContatos from './components/EditarContato';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 
 
 const Stack = createNativeStackNavigator();
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCAd6lDV9a9HERdKaEijnRRUWgeZI-SspQ",
+    authDomain: "aulamobile-c4232.firebaseapp.com",
+    projectId: "aulamobile-c4232",
+    storageBucket: "aulamobile-c4232.appspot.com",
+    messagingSenderId: "614036773871",
+    appId: "1:614036773871:web:fa9269b2c5841e583bb41a",
+    measurementId: "G-Q49FVJ63WV"
+};
+
 
 function App() {
 
